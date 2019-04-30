@@ -66,6 +66,7 @@
       let cssVar = getComputedStyle(this).getPropertyValue(variableString);
       console.log(cssVar, this, event)
       document.documentElement.style.setProperty(variableString, `${this.value}${this.dataset.sizing || ''}`);
+      //so, to target :root of css, I should aim for document.documentElement.style
     }
     inputs.forEach(input=> input.addEventListener('change',
     handleUpdate
