@@ -31,17 +31,31 @@
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const bornAfter50 = inventors.filter(e => e.year >= 1401 && e.year < 1501);
+    console.log(bornAfter50);
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
+    const firstLastName = inventors.map(e => [e.first, e.last]);
+    console.log(firstLastName)
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    const sortedByBirthdate = inventors.sort((a,b) => a.year - b.year);
+    console.log(sortedByBirthdate)
+
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
+    const howMuchInTotal = inventors.reduce((acc,cur) => acc+=(cur.passed - cur.year) ,0);
+    console.log(howMuchInTotal);
 
     // 5. Sort the inventors by years lived
+    const sortByYearsLived = inventors.sort((a,b) => {
+      const yearsLived = (birth, death) => death - birth;
+      return yearsLived(b.year, b.passed) - yearsLived(a.year, a.passed);
+    })
+    console.log(sortByYearsLived)
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
@@ -49,10 +63,35 @@
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    // const sortByAlpha = people.map(e=> e.split(", ")).sort((a,b)=> a[0] - b[0]);
+    // console.log(sortByAlpha)
 
+    const sortByAlpha = people.sort((a,b)=> {
+      const [secondA, firsA] = a.split(', ');
+      const [secondB, firstB] = b.split(', ');
+      return secondA > secondB ? 1 : -1;
+    })
+    console.log(sortByAlpha);
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const summedUp = data.reduce((acc, cur) => {
+      if(acc[cur]){
+        return Object.assign(acc, {[cur]:acc[cur] + 1});
+      } else {
+        return Object.assign(acc, {[cur]: 1})
+      }
+    } , {});
+
+    //v2
+       const summedUp2 = data.reduce((acc, cur) => {
+          if (acc[cur]) {
+            acc[cur] +=1;
+          } else {
+            acc[cur] =1}
+            return acc;
+        }, {});
+    console.log(summedUp);
 
   </script>
 </body>
