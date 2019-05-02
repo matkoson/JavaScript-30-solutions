@@ -17,6 +17,33 @@
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
+const data = [];
+fetch(endpoint).then(res=>res.json()).then(res=> data.push(...res));
+
+ const input = document.querySelector('.search');
+ const findMatches = event =>{
+  const phrase = event.target.value;
+  const suggestionsList = document.querySelector('.suggestions');
+   [...suggestionsList.children].forEach(e=>suggestionsList.removeChild(e));
+   //remove all of the children
+
+  const regex = new RegExp(`${phrase}`, 'gi')
+  let matchedData = data.filter(({city})=> city.match(regex));
+  //filter out the desired results, using regex pattern
+
+  matchedData = matchedData.map(({city, state, population})=> {
+    //pick out the kind of data that I want to display
+    const li = document.createElement('li');
+    [city, state, population].forEach(e=> {
+      const span = document.createElement('span');
+      span.appendChild(document.createTextNode(e))
+      li.appendChild(span);
+    })
+    suggestionsList.appendChild(li);
+    //putting it on a tree
+  })
+ }
+ input.addEventListener('change', findMatches);
 </script>
 </body>
 </html>
