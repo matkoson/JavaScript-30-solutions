@@ -96,6 +96,30 @@
   </div>
 
 <script>
+const inbox = document.querySelector('.inbox');
+let isShiftDown = false;
+let firstDown = false;
+console.log(inbox)
+document.querySelectorAll('.item').forEach(e=>e.addEventListener('change', handleMultiSelection))
+function handleMultiSelection() {
+    if (isShiftDown) {
+      const items = [...document.querySelectorAll('.item input')];
+      const first = items.findIndex(e=> e.checked ===true);
+      const last = items.map(e=>e.checked).lastIndexOf(true);
+      if(first !== -1 && last !== -1){
+        items.slice(first, last).forEach(e=> e.checked = true);
+      }
+  }
+}
+window.addEventListener('keydown', e => e.keyCode === 16 ? isShiftDown = true: null);
+window.addEventListener('keyup', e => e.keyCode === 16 && isShiftDown ? isShiftDown = false : null);
+
+
+
+
+
+
+
 </script>
 </body>
 </html>
