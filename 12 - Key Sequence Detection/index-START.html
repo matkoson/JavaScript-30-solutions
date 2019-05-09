@@ -7,6 +7,17 @@
 </head>
 <body>
 <script>
+  const pressedArr = [];
+  const secretCode = 'wesbos';
+  window.addEventListener('keyup', e => {
+    console.log(e.key);
+    pressedArr.push(e.key);
+    pressedArr.splice(-secretCode.length - 1, pressedArr.length - secretCode.length )
+    console.log(pressedArr);
+    if(pressedArr.join('').includes(secretCode)){
+      console.log('Found')
+    }
+  })
 </script>
 </body>
 </html>
