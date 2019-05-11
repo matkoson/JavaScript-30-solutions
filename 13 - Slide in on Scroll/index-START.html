@@ -43,20 +43,56 @@
   </div>
 
   <script>
-    function debounce(func, wait = 20, immediate = true) {
+    function debounce(func, wait = 10, immediate = true){
       var timeout;
       return function() {
         var context = this, args = arguments;
-        var later = function() {
+        var later = function(){
           timeout = null;
-          if (!immediate) func.apply(context, args);
+          if(!immediate) func.apply(context, args);
         };
         var callNow = immediate && !timeout;
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
-        if (callNow) func.apply(context, args);
-      };
+        if(callNow) func.apply(context, args);
+      }
     }
+
+const sliderImages = document.querySelectorAll('.slide-in');
+// let i = 0;
+
+function checkSlide(e) {
+
+  sliderImages.forEach(sliderImage => {
+    console.log(sliderImages)
+    //half way through the image 
+    const slideInAt = (window.scrollY + window.innerHeight) - 
+    sliderImage.height / 2;
+    //gets me the position of the bottom line of my viewport
+
+    const imageBottom = sliderImage.offsetTop + sliderImage.height;
+    //bottom of the image
+    const isHalfShown = slideInAt > sliderImage.offsetTop;
+    const isNotScrolledPast = window.scrollY < imageBottom;
+
+    if(isHalfShown && isNotScrolledPast) {
+      sliderImage.classList.add('active');
+    } else {
+      sliderImage.classList.remove('active');
+    }
+
+
+  })
+  // const offset = window.pageYOffset;
+  // const firstToBeShown = imgYOffset[i] && imgYOffset[i].getBoundingClientRect().y;
+  // if(firstToBeShown && offset > firstToBeShown) {
+  //   console.log('hit');
+  //   imgYOffset[i].classList.add('active');
+  //   i += 1;
+  // }
+
+}
+window.addEventListener('scroll', debounce(checkSlide));
 
   </script>
 
@@ -68,11 +104,11 @@
       font-size: 20px;
       font-weight: 200;
     }
-    
+
     body {
       margin: 0;
     }
-    
+
     *, *:before, *:after {
       box-sizing: inherit;
     }
@@ -107,7 +143,7 @@
     .align-left.slide-in {
       transform: translateX(-30%) scale(0.95);
     }
-    
+
     .align-right.slide-in {
       transform: translateX(30%) scale(0.95);
     }
